@@ -1,3 +1,6 @@
+let timer;
+let clock = 60;
+
 $(document).ready(init);
 function init() {
   $('#new').click(newgame);
@@ -18,6 +21,13 @@ function newgame(){
   });
 }
 
+function displayletters(letter, indices, chances) {
+  $.each( indices, function( i, pos ) {
+    $(`#l${pos-1}`).text(letter);
+  });
+  $('#chances').html(`<label>You have used ${chances} chances</label>`);
+}
+
 function displaygame(len, id) {
   for (let i = 0; i < len; i++) {
     $('#word').append(`<div class='letterchoice' id=l${i}> x </div>`);
@@ -29,6 +39,7 @@ function displaygame(len, id) {
 }
 
 function letterchosen(){
+  // check for clock and tries and send clock
   const letter = $('#letter').val();
   const id = $('#id').val();
   console.log('letter is:', id );
@@ -39,13 +50,7 @@ function letterchosen(){
     data: { id, letter },
     success: function(rsp){
       console.log('rsp:', rsp);
-      displayletters(rsp.letter, rsp.indices);
+      displayletters(rsp.letter, rsp.indices, rsp.chances);
     }
-  });
-}
-
-function displayletters(letter, indices) {
-  $.each( indices, function( i, pos ) {
-    $(`#l${pos-1}`).text(letter);
   });
 }

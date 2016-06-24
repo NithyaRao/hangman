@@ -11,7 +11,8 @@ router.post('/', (req, res) => {
   const g = new Game(req.body);
   g.word = newword;
   g.save((err) => {
-    res.send({id: g._id, length: g.word.length, name: g.name});
+    console.log('err:new game', err);
+    res.send({ id: g._id, length: g.word.length, name: g.name });
   });
 });
 
@@ -24,6 +25,10 @@ router.post('/guess', (req, res) => {
       if (game.word[i] === req.body.letter) indices.push(i + 1);
     }
     console.log('indices:', indices);
-    res.send({ letter: req.body.letter, indices });
+  //  guessletter = game.guess;
+    game.guesses.push(req.body.letter);
+    game.update(() => {
+      res.send({ letter: req.body.letter, indices, chances: game.guess.length });
+    });
   });
 });

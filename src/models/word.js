@@ -2,7 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 const file = path.join(__dirname, '../../data/wordlist');
-const data = fs.readFileSync(file, { encoding: 'utf8' }).split('\n');
+const data = fs.readFileSync(file, { encoding: 'utf8' }).split('\n').map(w => w.toLowerCase());
 
 function Word() {
 }
