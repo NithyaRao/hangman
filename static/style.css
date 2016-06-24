@@ -1,0 +1,7 @@
+.letterchoice {
+    list-style: none;
+    float: left;
+    border-bottom: thick dotted #ff0000;
+    font-family: monospace;
+    font-size: 50px;
+}
